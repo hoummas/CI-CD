@@ -16,7 +16,7 @@ node {
     }
 
     stage('Build'){
-        sh "mvn clean install"
+        docker exec aca9e4d70272 sh "mvn clean install"
     }
 
     stage('Sonar'){
