@@ -2,8 +2,6 @@ def CONTAINER_NAME="jenkins-pipeline"
 def CONTAINER_TAG="latest"
 def DOCKER_HUB_USER="hoummasdocker"
 def HTTP_PORT="5555"
-def dockerHome = tool 'myDocker'
-def mavenHome  = tool 'myMaven'
 node {
 
     stage('Initialize'){
@@ -17,14 +15,14 @@ node {
     }
 
     stage('Build'){
-        docker exec aca9e4d70272 ${mavenHome}/bin/bash -c sh "mvn clean install"
+        docker exec jenkins ${mavenHome}/bin/bash -c sh "mvn clean install"
     }
 
     stage('Sonar'){
         try {
-           docker exec aca9e4d70272 ${mavenHome}/bin/bash -c sh "mvn sonar:sonar"
+           docker exec jenkins ${mavenHome}/bin/bash -c sh "mvn sonar:sonar"
         } catch(error){
-           docker exec aca9e4d70272 ${mavenHome}/bin/bash -c echo "The sonar server could not be reached ${error}"
+           docker exec jenkins ${mavenHome}/bin/bash -c echo "The sonar server could not be reached ${error}"
         }
      }
 
